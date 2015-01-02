@@ -85,11 +85,14 @@
             });
       // Function to change color of each DIV      
 			$(document).on('click', '.led', function(){
-				if($(this).css('background-color','white')){
-					$(this).css('background-color','black');
+				var color = $(this).css("background-color");
+				console.log(color);
+				
+				if(color == 'rgb(255, 255, 255)'){
+					$(this).css('background-color','rgb(0, 0, 0)');
 					console.log('black');
 				}else {
-					$(this).css('background-color','white');  
+					$(this).css('background-color','rgb(255, 255, 255)');  
 					console.log('white');
 				};
 			});
