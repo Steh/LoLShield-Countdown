@@ -1,4 +1,5 @@
 /*
+New Project by Richfield123 + Steh
  Basic LoL Shield Test
  
  Writen for the LoL Shield, designed by Jimmie Rodgers:
