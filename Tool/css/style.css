@@ -83,7 +83,7 @@ header{
 	width: 34px;
 	height: 34px;
 	float:left;
-	background-color: white;
+	background-color: rgb(255, 255, 255);
 	margin-left: 3px;
 	margin-top: 2px;
 	border: 1px solid black;

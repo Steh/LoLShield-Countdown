@@ -47,7 +47,10 @@
           
 		      <label for="breite">Breite: </label><input type="text" value="5" name="breite" max-length="3" id="breite">
 		      <label for="hoehe">Höhe: </label><input type="text" value="5" name="hoehe" max-length="3" id="hoehe">
-		      <button id="erzeugen">Erzeugen</button>
+		      <button id="erzeugen_matrix">Erzeugen Matrix</button>
+		    </div>
+				<div id="">
+		      	<button id="erzeugen_code">Erzeugen Code</button>
 		    </div>
 		</div>
         <div id="pixeln_wrap">
@@ -68,7 +71,7 @@
 
     $(document).ready(function(){
 
-            $('#erzeugen').click(function(){
+            $('#erzeugen_matrix').click(function(){
                 var breite = $('#breite').val();
                 var hoehe = $('#hoehe').val();
                 
@@ -79,24 +82,36 @@
                     for(var b = 0; b < breite; b ++){
 											  // erstellt die einzelnen divs mit id=breite-hoehe
                         $('#pixeln_wrap').append('<div id='+b+'-'+h+' class="led"></div>');
-                    };
-                    
-                };
-            });
+                    }; // End 'for loop breite'
+                }; // end 'for loop hoehe'
+            }); // end '$('#erzeugen').click(function()
+
       // Function to change color of each DIV      
 			$(document).on('click', '.led', function(){
+				//save bg-color 
 				var color = $(this).css("background-color");
-				console.log(color);
 				
+				//if color white, set black, else white
 				if(color == 'rgb(255, 255, 255)'){
 					$(this).css('background-color','rgb(0, 0, 0)');
-					console.log('black');
 				}else {
-					$(this).css('background-color','rgb(255, 255, 255)');  
-					console.log('white');
+					$(this).css('background-color','rgb(255, 255, 255)');
 				};
-			});
-		});
+			}); //end $(document).on('click', '.led', function()
+			
+			$('#erzeugen_code').click(function(){
+				//noch fehleranfällig!!!!!
+				var breite = $('#breite').val();
+				var hoehe = $('#hoehe').val();
+
+				for(var h = 0; h < hoehe; h ++){
+					for(var b = 0; b < breite; b ++){
+						
+					}; // end 'for loop breite'
+				}; // end 'for loop hoehe'
+			}); // end '$('#erzeugen_code').click(function()'
+			
+		}); //end $(document).ready(function()
 
 </script>
 
