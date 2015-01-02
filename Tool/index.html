@@ -1,0 +1,100 @@
+<!--
+1
+2
+4
+8
+16
+31
+64
+128
+256
+512
+1024
+2048
+4096
+8192
+16384
+-->
+
+ <!DOCTYPE html>
+<html>
+<head>
+	<title>Pixeln</title>
+	<meta charset="UTF-8" />
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
+	<script src="js/jquery.min.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+	<link href='http://fonts.googleapis.com/css?family=Dancing+Script' rel='stylesheet' type='text/css'>
+	<link rel="shortcut icon" href="img/favicon.ico" />
+</head>
+
+<body>
+	
+	<div id="wrapper">
+		
+		<header>
+			<div id="head_wrap">
+				<h1 class="farbe"> Pixeln</h1>
+
+				<!-- <div class="deko"></div> -->
+			</div>
+		</header>
+
+		<main>
+		<div id="left_wrap">
+		    <div id="">
+          
+		      <label for="breite">Breite: </label><input type="text" value="5" name="breite" max-length="3" id="breite">
+		      <label for="hoehe">Höhe: </label><input type="text" value="5" name="hoehe" max-length="3" id="hoehe">
+		      <button id="erzeugen">Erzeugen</button>
+		    </div>
+		</div>
+        <div id="pixeln_wrap">
+        </div>
+        <div id="right_wrap">
+        </div>
+		</main>
+
+		<footer>
+
+		</footer>
+
+	</div>
+
+</body>
+
+<script type"text/javascript">
+
+    $(document).ready(function(){
+
+            $('#erzeugen').click(function(){
+                var breite = $('#breite').val();
+                var hoehe = $('#hoehe').val();
+                
+                var wrapperBreite = breite * 39; // 39 = div breite + border + margin
+                $('#pixeln_wrap').css( 'width', wrapperBreite+'px'); 
+                $('#pixeln_wrap').find('.led').remove();
+                for(var h = 0; h < hoehe; h ++){
+                    for(var b = 0; b < breite; b ++){
+                        $('#pixeln_wrap').append('<div id='+h + '-'+ b +' class="led" ></div>');
+                    };
+                    
+                };
+                console.log(breite);
+            });
+            
+        $('.led').on('click', function(){
+//            if($(this).css('background-color','white')){
+//              $(this).css('background-color', 'black');  
+//            };
+
+            console.log('test');
+        });
+
+
+    });
+
+</script>
+
+</html>
