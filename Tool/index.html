@@ -3,10 +3,10 @@
 <head>
 	<title>Pixeln</title>
 	<meta charset="UTF-8" />
-	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
-	<script src="js/jquery.min.js"></script>
-	<script src="js/jquery-ui.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/jquery-ui.min.css">
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery-ui.min.js"></script>
 	<link href='http://fonts.googleapis.com/css?family=Dancing+Script' rel='stylesheet' type='text/css'>
 	<link rel="shortcut icon" href="img/favicon.ico" />
 </head>
@@ -26,9 +26,10 @@
 		<main>
 		<div id="left_wrap">
 		    <div id="">
-          
-		      <label for="breite">Breite: </label><input type="text" value="9" name="breite" max-length="3" id="breite">
-		      <label for="hoehe">Höhe: </label><input type="text" value="14" name="hoehe" max-length="3" id="hoehe">
+		      <label for="breite">Breite: </label>
+					<input type="number" value="9" name="breite" max-length="3" id="breite" required>
+		      <label for="hoehe">Höhe: </label>
+					<input type="number" value="14" name="hoehe" max-length="3" id="hoehe" required>
 		      <button id="erzeugen_matrix">Erzeugen Matrix</button>
 		    </div>
 				<div id="">
@@ -90,7 +91,7 @@
 				$('#pixeln_wrap').append('<div id='+h+'-'+b+' class="led"></div>');
 			}; // End 'for loop breite'
 		}; // end 'for loop hoehe'
-			
+		
 		createCode();
 		} // End createMatrix
 		
