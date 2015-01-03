@@ -45,13 +45,17 @@
 		<div id="left_wrap">
 		    <div id="">
           
-		      <label for="breite">Breite: </label><input type="text" value="5" name="breite" max-length="3" id="breite">
-		      <label for="hoehe">Höhe: </label><input type="text" value="5" name="hoehe" max-length="3" id="hoehe">
+		      <label for="breite">Breite: </label><input type="text" value="9" name="breite" max-length="3" id="breite">
+		      <label for="hoehe">Höhe: </label><input type="text" value="14" name="hoehe" max-length="3" id="hoehe">
 		      <button id="erzeugen_matrix">Erzeugen Matrix</button>
 		    </div>
 				<div id="">
 		      	<button id="erzeugen_code">Erzeugen Code</button>
 		    </div>
+				<div id="">
+					<label for="output">Output: </label>
+					<input type="text" name="output" max-length="20" id="output">
+				</div>
 		</div>
         <div id="pixeln_wrap">
         </div>
@@ -68,23 +72,24 @@
 </body>
 
 <script type"text/javascript">
-
     $(document).ready(function(){
-
-            $('#erzeugen_matrix').click(function(){
-                var breite = $('#breite').val();
-                var hoehe = $('#hoehe').val();
-                
-                var wrapperBreite = breite * 39; // 39 = div breite + border + margin
-                $('#pixeln_wrap').css( 'width', wrapperBreite+'px'); 
-                $('#pixeln_wrap').find('.led').remove();
-                for(var h = 0; h < hoehe; h ++){
-                    for(var b = 0; b < breite; b ++){
-											  // erstellt die einzelnen divs mit id=breite-hoehe
-                        $('#pixeln_wrap').append('<div id='+b+'-'+h+' class="led"></div>');
-                    }; // End 'for loop breite'
-                }; // end 'for loop hoehe'
-            }); // end '$('#erzeugen').click(function()
+		// activates debug mode
+		
+		var debug = true;
+		$('#erzeugen_matrix').click( function(){
+			var breite = $('#breite').val();
+			var hoehe = $('#hoehe').val();
+			
+			var wrapperBreite = breite * 39; // 39 = div breite + border + margin
+			$('#pixeln_wrap').css( 'width', wrapperBreite+'px'); 
+			$('#pixeln_wrap').find('.led').remove();
+			for(var h = 0; h < hoehe; h ++){
+				for(var b = 0; b < breite; b ++){
+					// erstellt die einzelnen divs mit id=breite-hoehe
+					$('#pixeln_wrap').append('<div id='+h+'-'+b+' class="led"></div>');
+				}; // End 'for loop breite'
+			}; // end 'for loop hoehe'
+			}); // end '$('#erzeugen').click(function()
 
       // Function to change color of each DIV      
 			$(document).on('click', '.led', function(){
@@ -103,16 +108,39 @@
 				//noch fehleranfällig!!!!!
 				var breite = $('#breite').val();
 				var hoehe = $('#hoehe').val();
-
-				for(var h = 0; h < hoehe; h ++){
-					for(var b = 0; b < breite; b ++){
+				var ausgabe = '{';
+				
+				for(var b = 0; b < breite; b ++){
+					// inital/reset binary
+					var binary = '';
+					
+					for(var h = 0; h < hoehe; h ++){
+						// create ID
+						var id  = '#'+ h + '-' + b;
+						var color = $(id).css('background-color');
 						
+						if(color == 'rgb(255, 255, 255)'){
+							binary = binary + '0';}
+						else{
+							binary = binary + '1';
+						};
 					}; // end 'for loop breite'
+				
+				//convert binary to decimal
+				if(debug){console.log(binary)};
+				
+				binaryNumber = parseInt(binary,2);
+   			var decimalNumber = binaryNumber.toString(10);
+				ausgabe = ausgabe + decimalNumber + ', ';
 				}; // end 'for loop hoehe'
+				
+				if(debug){console.log(ausgabe)};
+				
+				//
+			  ausgabe = ausgabe.substr(0, ausgabe.length -2) + '}';
+				$('#output').val(ausgabe);
 			}); // end '$('#erzeugen_code').click(function()'
-			
 		}); //end $(document).ready(function()
-
 </script>
 
 </html>
