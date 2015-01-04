@@ -26,19 +26,17 @@
 		<main>
 		<div id="left_wrap">
 		    <div id="">
-		      <label for="breite">Breite: </label>
-					<input type="number" value="9" name="breite" max-length="3" id="breite" required>
-		      <label for="hoehe">Höhe: </label>
-					<input type="number" value="14" name="hoehe" max-length="3" id="hoehe" required>
-		      <button id="erzeugen_matrix">Erzeugen Matrix</button>
+		      <label for="breite_create">Breite: </label>
+					<input type="number" value="9" name="breite_create" max-length="3" id="breite_create" required>
+		      <label for="hoehe_create">Höhe: </label>
+					<input type="number" value="14" name="hoehe_create" max-length="3" id="hoehe_create" required>
+		      <button id="create_matrix">Erzeugen Matrix</button>
 		    </div>
 				<div id="">
 					<label for="output">Output: </label>
 					<input type="text" name="output" max-length="50" id="output">
 				</div>
 				<div id="">
-					<label for="breite_import">Breite: </label>
-					<input type="number" value="9" name="breite_import" max-length="3" id="breite_import" required>
 					<label for="hoehe_import">Höhe: </label>
 					<input type="number" value="14" name="hoehe_import" max-length="3" id="hoehe_import" required>
 					<label for="input">Import: </label>
@@ -62,13 +60,14 @@
 
 <script type"text/javascript">
 	//global Variable
-	var debug = true;
+	var debug = false;
 
 	$(document).ready(function(){
 	//will create Matrix on start
+	
 	createMatrix();
 	
-	$('#erzeugen_matrix').click(createMatrix);
+	$('#create_matrix').click(createMatrix);
 	
 	$('#import_matrix').click(importMatrix);
 	
@@ -83,17 +82,19 @@
 		}else {
 			$(this).css('background-color','rgb(255, 255, 255)');
 		};
-		
 		createCode();
 	}); // end click createMatrix
 	
 	}); //end $(document).ready function
 		
 	function createMatrix(breite, hoehe) {
-		if(!breite){
-			var breite = $('#breite').val();
-			var hoehe  = $('#hoehe').val();
+		if( (!breite) || !($.isNumeric(breite)) ) {
+			var breite = $('#breite_create').val();
+			var hoehe  = $('#hoehe_create').val();
+			if(debug){console.log('get Value from input')};
 		}
+
+		if(debug){console.log(breite)};
 		
 		var wrapperBreite = breite * 39; // 39 = div breite + border + margin
 		$('#pixeln_wrap').css( 'width', wrapperBreite+'px'); 
@@ -105,13 +106,13 @@
 			}; // End 'for loop breite'
 		}; // end 'for loop hoehe'
 		
-		createCode();
+		createCode(breite, hoehe);
 		} // End createMatrix
 		
 		function createCode(breite, hoehe) {
 			//noch fehleranfällig!!!!!
-			var breite = $('#breite').val();
-			var hoehe = $('#hoehe').val();
+			var breite = $('#breite_create').val();
+			var hoehe  = $('#hoehe_create').val();
 			var ausgabe = '{';
 			
 			for(var b = 0; b < breite; b ++){
@@ -141,7 +142,7 @@
 			}; // end 'for loop hoehe'
 				
 			if(debug){console.log(ausgabe)};
-
+			
 			ausgabe = ausgabe.substr(0, ausgabe.length -2) + '}';
 			$('#output').val(ausgabe);
 			
@@ -150,7 +151,6 @@
 		function importMatrix(){
 			//value for matrix
 			var code_import 	= $('#input').val();
-			var breite_import	= $('#breite_import').val();
 			var hoehe_import	= $('#hoehe_import').val();
 			var regEx = "['{']([0-9]{1,}[','][' ']){1,}[0-9]{1,}['}']";
 			
@@ -166,9 +166,13 @@
 			// ## validate length
 			// 
 			var importArray = code_import.match(/([0-9]{1,})/g);
-			if(importArray.length != breite_import){
-				alert('##########' + importArray.length);
-			}
+			
+			// get breite from Input
+			var breite_import = importArray.length;
+			
+			//if(importArray.length != breite_import){
+			//	alert('##########' + importArray.length);
+			//}
 			
 			for(var x=0; x < breite_import; x++ ){
 				var binary = parseInt(importArray[x], 10).toString(2);
@@ -180,9 +184,9 @@
 				if(debug){console.log('importMatrix.importArray[' + x + '] = ' + binary)};
 				
 				importArray[x] = binary;
-				console.log(importArray[x]);
+				if(debug){console.log(importArray[x])};
 			}
-			
+			console.log('createMatrix import');
 			createMatrix(breite_import, hoehe_import);
 			
 			for(var x = 0; x < breite_import; x++){
@@ -196,7 +200,9 @@
 						$(id).css('background-color', 'black');
 					}
 				}
-				
+				$('#breite_create').val(breite_import);
+				$('#hoehe_create').val(hoehe_import);
+				createCode()
 			}
 		}
 </script>

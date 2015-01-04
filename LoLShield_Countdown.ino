@@ -32,32 +32,35 @@
 #include <Charliplexing.h> //Imports the library, which needs to be
                            //Initialized in setup.
 
-//Sets the time each frame is shown (milliseconds)
-const unsigned int blinkdelay = 2000;
-
 PROGMEM const uint16_t BitMapCountdown[][9] = {
-//Diaganal swipe across the screen
-{0, 3980, 8142, 6342, 6342, 6342, 8190, 4092, 0}, // 9
-{0, 3900, 6630, 4290, 4290, 4290, 6630, 3900, 0}, // 8
-{0, 6144, 6150, 6174, 6264, 6624, 8064, 7680, 0}, // 7
-{0, 508, 2046, 3782, 7366, 6342, 254, 124, 0},    // 6
-{0, 8076, 8078, 6534, 6534, 6598, 6398, 6268, 0}, // 5
-{0, 224, 992, 1888, 3680, 8190, 8190, 96, 0},     // 4
-{0, 3084, 7182, 6342, 6342, 6342, 4092, 1848, 0}, // 3
-{0, 3078, 7198, 6206, 6390, 6630, 8070, 3846, 0}, // 2
-{0, 3072, 7168, 7168, 7168, 8190, 8190, 4094, 0}, // 1
-{0, 4092, 8190, 6150, 6150, 6150, 8190, 4092, 0}, // 0	
-{18000} // Killswitch
+  {0, 3980, 8142, 6342, 6342, 6342, 8190, 4092, 0}, // 9
+  {0, 4092, 8190, 6342, 6342, 6342, 8190, 4092, 0}, // 8
+  {0, 6144, 6150, 6174, 6264, 6624, 8064, 7680, 0}, // 7
+  {0, 4092, 8190, 6342, 6342, 6342, 7422, 3324, 0}, // 6
+  {0, 8076, 8078, 6534, 6534, 6598, 6398, 6268, 0}, // 5
+  {0, 224, 992, 1888, 3680, 8190, 8190, 96, 0},     // 4
+  {0, 3084, 7182, 6342, 6342, 6342, 8190, 4092, 0}, // 3
+  {0, 3078, 7198, 6206, 6390, 6630, 8070, 3846, 0}, // 2
+  {0, 0, 0, 2048, 6150, 8190, 8190, 6, 0}, // 1
+  {0, 4092, 8190, 6150, 6150, 6150, 8190, 4092, 0}, // 0	
+  {18000} // Killswitch
+};
+
+PROGMEM const uint16_t BitMapHeart[][9] = {
+  {1984, 4064, 4080, 4092, 2046, 4092, 4080, 4064, 1984},
+  //{0, 0, 0, 0, 0, 0, 0, 0, 0},
+  {18000} // Killswitch
 };
 
 void setup() {
   LedSign::Init(DOUBLE_BUFFER | GRAYSCALE);  //Initializes the screen
+  DisplayBitMap(1, 1, 2000);  //Displays the bitmap
 }
 void loop() {
-      DisplayBitMap(1);  //Displays the bitmap
+  DisplayBitMap(1, 2, 200);  //Displays the bitmap
 }
 
-void DisplayBitMap(uint8_t grayscale)
+void DisplayBitMap(uint8_t grayscale, int animation, int blinkdelay)
 {
   boolean run=true;    //While this is true, the screen updates
   byte frame = 0;      //Frame counter
@@ -67,11 +70,14 @@ void DisplayBitMap(uint8_t grayscale)
 
   while(run == true) {
 
-    for(line = 0; line < 9; line++) {
+    for(byte line = 0; line < 9; line++) {
 
       //Here we fetch data from program memory with a pointer.
-      data = pgm_read_word_near (&BitMapCountdown[frame][line]);
-      
+      if(animation == 1){
+        data = pgm_read_word_near (&BitMapCountdown[frame][line]);
+      }else {
+        data = pgm_read_word_near (&BitMapHeart[frame][line]);
+      }
       //Kills the loop if the kill number is found
       if (data==18000){
         run=false;
