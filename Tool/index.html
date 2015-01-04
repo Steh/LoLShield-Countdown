@@ -36,6 +36,15 @@
 					<label for="output">Output: </label>
 					<input type="text" name="output" max-length="50" id="output">
 				</div>
+				<div id="">
+					<label for="breite_import">Breite: </label>
+					<input type="number" value="9" name="breite_import" max-length="3" id="breite_import" required>
+					<label for="hoehe_import">Höhe: </label>
+					<input type="number" value="14" name="hoehe_import" max-length="3" id="hoehe_import" required>
+					<label for="input">Import: </label>
+					<input type="text" value="{8192, 4096, 2048, 1025, 514, 260, 136, 80, 32}" name="input" id="input">
+		      <button id="import_matrix">import Matrix</button>
+		    </div>
 		</div>
         <div id="pixeln_wrap">
         </div>
@@ -53,13 +62,15 @@
 
 <script type"text/javascript">
 	//global Variable
-	var debug = false;
+	var debug = true;
 
 	$(document).ready(function(){
 	//will create Matrix on start
 	createMatrix();
 	
 	$('#erzeugen_matrix').click(createMatrix);
+	
+	$('#import_matrix').click(importMatrix);
 	
 	// Function to change color of each DIV      
 	$(document).on('click', '.led', function(){
@@ -79,8 +90,10 @@
 	}); //end $(document).ready function
 		
 	function createMatrix(breite, hoehe) {
-		var breite = $('#breite').val();
-		var hoehe  = $('#hoehe').val();
+		if(!breite){
+			var breite = $('#breite').val();
+			var hoehe  = $('#hoehe').val();
+		}
 		
 		var wrapperBreite = breite * 39; // 39 = div breite + border + margin
 		$('#pixeln_wrap').css( 'width', wrapperBreite+'px'); 
@@ -95,7 +108,7 @@
 		createCode();
 		} // End createMatrix
 		
-		function createCode() {
+		function createCode(breite, hoehe) {
 			//noch fehleranfällig!!!!!
 			var breite = $('#breite').val();
 			var hoehe = $('#hoehe').val();
@@ -120,7 +133,9 @@
 				//convert binary to decimal
 				if(debug){console.log(binary)};
 				
-				binaryNumber = parseInt(binary,2);
+				// binary number to int
+				var binaryNumber = parseInt(binary,2);
+				
    			var decimalNumber = binaryNumber.toString(10);
 				ausgabe = ausgabe + decimalNumber + ', ';
 			}; // end 'for loop hoehe'
@@ -131,6 +146,59 @@
 			$('#output').val(ausgabe);
 			
 		} // End createCode()
+		
+		function importMatrix(){
+			//value for matrix
+			var code_import 	= $('#input').val();
+			var breite_import	= $('#breite_import').val();
+			var hoehe_import	= $('#hoehe_import').val();
+			var regEx = "['{']([0-9]{1,}[','][' ']){1,}[0-9]{1,}['}']";
+			
+			if(debug){console.log('importMatrix.code_import = ' + code_import)};
+			
+			// # Validation
+			// ## code_import check
+			if(code_import.match(regEx) == null){
+				alert('Ausdruck entspricht nicht der form');
+				return;
+			}
+			
+			// ## validate length
+			// 
+			var importArray = code_import.match(/([0-9]{1,})/g);
+			if(importArray.length != breite_import){
+				alert('##########' + importArray.length);
+			}
+			
+			for(var x=0; x < breite_import; x++ ){
+				var binary = parseInt(importArray[x], 10).toString(2);
+				
+				while (binary.length < hoehe_import){
+					binary = '0' + binary;
+				};
+				
+				if(debug){console.log('importMatrix.importArray[' + x + '] = ' + binary)};
+				
+				importArray[x] = binary;
+				console.log(importArray[x]);
+			}
+			
+			createMatrix(breite_import, hoehe_import);
+			
+			for(var x = 0; x < breite_import; x++){
+				var temp = importArray[x];
+				
+				for(var y = 0; y < hoehe_import; y++){
+					var wert = temp.charAt(y)
+					
+					if(wert == 1){
+						var id  = '#'+ y + '-' + x;
+						$(id).css('background-color', 'black');
+					}
+				}
+				
+			}
+		}
 </script>
 
 </html>

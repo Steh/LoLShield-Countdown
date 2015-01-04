@@ -35,40 +35,25 @@
 //Sets the time each frame is shown (milliseconds)
 const unsigned int blinkdelay = 2000;
 
-/*
-The BitMap array is what contains the frame data. Each line is one full frame.
-Since each number is 16 bits, we can easily fit all 14 LEDs per row into it.
-The number is calculated by adding up all the bits, starting with lowest on
-the left of each row. 18000 was chosen as the kill number, so make sure that
-is at the end of the matrix, or the program will continue to read into memory.
-
-Here PROGMEM is called, which stores the array into ROM, which leaves us
-with our RAM. You cannot change the array during run-time, only when you
-upload to the Arduino. You will need to pull it out of ROM, which is covered
-below. If you want it to stay in RAM, just delete PROGMEM
-*/
-PROGMEM const uint16_t BitMap[][9] = {
+PROGMEM const uint16_t BitMapCountdown[][9] = {
 //Diaganal swipe across the screen
-
-////Null
-//{0, 0, 0, 0, 0, 0, 0, 0, 0}, 
-//{0, 4094, 4094, 3078, 3078, 3078, 4094, 4094, 0},
-//{1, 1, 1, 1, 1, 1, 1, 1, 1}, 
-{0, 4092, 8190, 3078, 3078, 3078, 8190, 4092, 0}, // NULL// N
-(0, 4092, 8190, 6150, 6150, 6150, 8190, 4092, 0}, 
-{0, 16381, 0, 0, 0, 0, 0, 16383, 0},
-//{0, 16383, 7, 0, 0, 0, 0, 16383, 0},
-//{1, 0, 0, 0, 0, 0, 0, 0, 0},
-//{1, 0, 0, 0, 0, 0, 0, 0, 0},
-//{3, 1, 0, 0, 0, 0, 0, 0, 0},
-{18000}
+{0, 3980, 8142, 6342, 6342, 6342, 8190, 4092, 0}, // 9
+{0, 3900, 6630, 4290, 4290, 4290, 6630, 3900, 0}, // 8
+{0, 6144, 6150, 6174, 6264, 6624, 8064, 7680, 0}, // 7
+{0, 508, 2046, 3782, 7366, 6342, 254, 124, 0},    // 6
+{0, 8076, 8078, 6534, 6534, 6598, 6398, 6268, 0}, // 5
+{0, 224, 992, 1888, 3680, 8190, 8190, 96, 0},     // 4
+{0, 3084, 7182, 6342, 6342, 6342, 4092, 1848, 0}, // 3
+{0, 3078, 7198, 6206, 6390, 6630, 8070, 3846, 0}, // 2
+{0, 3072, 7168, 7168, 7168, 8190, 8190, 4094, 0}, // 1
+{0, 4092, 8190, 6150, 6150, 6150, 8190, 4092, 0}, // 0	
+{18000} // Killswitch
 };
 
 void setup() {
   LedSign::Init(DOUBLE_BUFFER | GRAYSCALE);  //Initializes the screen
 }
 void loop() {
-  //for (uint8_t gray = 1; gray < SHADES; gray++)
       DisplayBitMap(1);  //Displays the bitmap
 }
 
@@ -85,7 +70,7 @@ void DisplayBitMap(uint8_t grayscale)
     for(line = 0; line < 9; line++) {
 
       //Here we fetch data from program memory with a pointer.
-      data = pgm_read_word_near (&BitMap[frame][line]);
+      data = pgm_read_word_near (&BitMapCountdown[frame][line]);
       
       //Kills the loop if the kill number is found
       if (data==18000){
