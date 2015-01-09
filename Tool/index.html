@@ -68,10 +68,12 @@
 <script type"text/javascript">
 	//global Variable
 	var debug = false;
-
+	
 	$(document).ready(function(){
-		//will create Matrix on start
-		createMatrix($('#breite_create').val(), $('#hoehe_create').val());
+		// create Matrix on start
+		var breite = $('#breite_create').val();
+		var hoehe  = $('#hoehe_create').val();
+		createMatrix(breite, hoehe);
 		
 		// Action for the Buttons
 		$('#create_matrix').click(function(){
@@ -81,9 +83,12 @@
 		});
 		
 		$('#import_matrix').click(function(){
+			hoehe		= $('#hoehe_import').val();
 			var val = $('#input').val();
-			importMatrix(val);
+			
+			importMatrix(val, hoehe);
 		});
+		
 		$('#save_output').click(saveOutputClipboard);
 		$('#removeSelected_clipboard').click(removeSelectedClipboard);
 		$('#importSelected_clipboard').click(importSelectedClipboard);
@@ -123,12 +128,8 @@
 		} // End createMatrix
 		
 		function createCode(breite, hoehe) {
-            if( (!breite) || !($.isNumeric(breite)) ) {
-                breite = $('#breite_create').val();
-                hoehe  = $('#hoehe_create').val();
-                if(debug){console.log('get Value from input')};
-            }
-            var ausgabe = '{';
+			
+      var ausgabe = '{';
 			
 			for(var b = 0; b < breite; b ++){
 				// inital/reset binary
@@ -163,12 +164,9 @@
 			
 		} // End createCode()
 		
-		function importMatrix(code_import){
-      if(code_import == null){
-				code_import 	= $('#input').val();
-			}
+		function importMatrix(code_import, hoehe_import){
+			
 			//value for matrix
-			var hoehe_import	= $('#hoehe_import').val();
 			var regEx_import = "['{']([0-9]{1,}[','][' ']){1,}[0-9]{1,}['}']";
 			
 			if(debug){console.log('importMatrix.code_import = ' + code_import)};
@@ -227,16 +225,25 @@
 					}
 				}
 				
+				// set import to create
 				$('#breite_create').val(breite_import);
 				$('#hoehe_create').val(hoehe_import);
-				createCode(breite_import, hoehe_import)
+				
+				//Set Global Variable
+				hoehe  = hoehe_import;
+				breite = breite_import;
+				
+				createCode(breite, hoehe)
 			}
 		} // Ende importMatrix
 		
 		////////// CLIPBOARD /////////
 		function saveOutputClipboard(){
 			var output = $('#output').val();
-			$('#clipboard').append(new Option(output, "1"));
+			hoehe = $('#hoehe_create').val();
+			
+			// hoehe is global variable, represents the actual matrix hoehe
+			$('#clipboard').append('<option value="' + hoehe + '">'+ output + '</option>');
 		}
 		
 		function removeSelectedClipboard(){
@@ -244,8 +251,11 @@
 		}
 		
 		function importSelectedClipboard(){
-			var value = $('#clipboard option:selected').text();
-			importMatrix(value);
+			var text = $('#clipboard option:selected').text();
+			var hoehe = $('#clipboard option:selected').val();
+			
+			console.log('LOG HOEHE: ' + hoehe);
+			importMatrix(text, hoehe);
 		}
 		
 </script>
