@@ -1,16 +1,12 @@
 *{margin:0; padding:0;}
 
-#wrapper{
-	margin:30px auto 0 auto;
-	width:1280px;
-	height:auto;
-}
 
 #pixeln_wrap{
-	_width:640px;
-	_height:640px;
+/*	_width:640px;
+	_height:640px; */
     margin: 0 auto;
 }
+
 
 .deko{
 	width: 215px;
@@ -51,26 +47,6 @@ h1{
 	display: block;
 }
 
-
-#head_wrap{
-	margin:0 auto;
-	width:1280px;
-	height:100px;
-}
-
-#head_wrap img{
-	margin:-10px auto;
-	display: block;
-	width: 210px;
-    
-}
-
-
-header{
-	width:640px;
-	height:100px;
-}
-
 #moreColors,
 #moreColors img{
     width: 60px;
@@ -88,3 +64,28 @@ header{
 	margin-top: 2px;
 	border: 1px solid black;
 }
+
+/*
+#head_wrap{
+	margin:0 auto;
+	width:1280px;
+	height:100px;
+}
+
+#head_wrap img{
+	margin:-10px auto;
+	display: block;
+	width: 210px;   
+}
+
+header{
+	width:1280px;
+	height:100px;
+}
+
+#wrapper{
+	margin:30px auto 0 auto;
+	width:1280px;
+	height:auto;
+}
+*/

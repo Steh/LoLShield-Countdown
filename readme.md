@@ -7,3 +7,18 @@ jQuery Tool to create Decimal Array for Jimmie´s LolShield
 On 31c3 we solder a 9x14 LED Matrix ([jimmyprodgers.com: Lolshield](http://jimmieprodgers.com/kits/lolshield/)), this was very cool and makes a lot of fun. After finishing (you have to solder, around 260 connections) we think about all the cool stuff we could do with our new blinking shields. So we decide to build a countdown clock for new years eve. The idea is, at first countdown from 9 to 0 than an endless animation like a firework. After trying to display a simple 0 (each row can be seen as 14 binarys) we decided to build a jQuery tool to help calculationg the values.
 
 ## jQuery Tool
+### To DO
+* Layouting  
+* Clipboard
+  * disable remove/import while emtpy
+  * change order of selects
+* Validate input!!!
+* define Maxsize for x, y (x = 18, y > 0)
+
+### Ready
+* create Matrix with ?? < x < ??, ?? < y < ??
+* create dezimal Array for LOL Shield
+* Import Array through textfield
+* save array in 'clipboard'
+  * remove arrays
+  * save arrays with different size

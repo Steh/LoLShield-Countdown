@@ -3,20 +3,24 @@
 <head>
 	<title>Pixeln</title>
 	<meta charset="UTF-8" />
-	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/jquery-ui.min.css">
 	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/js/jquery-ui.min.js"></script>
 	<link href='http://fonts.googleapis.com/css?family=Dancing+Script' rel='stylesheet' type='text/css'>
 	<link rel="shortcut icon" href="img/favicon.ico" />
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+	
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 
 <body>
-	
-	<div id="wrapper">
-		
+	<div class="container">
 		<header>
-			<div id="head_wrap">
+			<div id="head_wrap" class="page-header">
 				<h1 class="farbe"> Pixeln</h1>
 
 				<!-- <div class="deko"></div> -->
@@ -24,45 +28,47 @@
 		</header>
 
 		<main>
-		<div id="left_wrap">
-		    <div id="">
-		      <label for="breite_create">Breite: </label>
-					<input type="number" value="9" name="breite_create" max-length="3" id="breite_create" required>
-		      <label for="hoehe_create">Höhe: </label>
-					<input type="number" value="14" name="hoehe_create" max-length="3" id="hoehe_create" required>
-		      <button id="create_matrix">Erzeugen Matrix</button>
-		    </div>
-				<div id="">
-					<label for="output">Output: </label>
-					<input type="text" name="output" max-length="50" id="output">
-					<button id="save_output">save output</button>
-				</div>
-				<div id="">
-					<label for="hoehe_import">Höhe: </label>
-					<input type="number" value="14" name="hoehe_import" max-length="3" id="hoehe_import" required>
-					<label for="input">Import: </label>
-					<input type="text" value="{8192, 4096, 2048, 1025, 514, 260, 136, 80, 32}" name="input" id="input">
-		      <button id="import_matrix">import Matrix</button>
-		    </div>
-				<div id="">
-					<select name="clipboard" id="clipboard" size='10'>
-	    		</select>
-					<button id="removeSelected_clipboard">Remove</button>
-					<button id="importSelected_clipboard">Import</button>
-				</div>
-		</div>
-        <div id="pixeln_wrap">
-        </div>
-        <div id="right_wrap">
-        </div>
+			<div class="row">
+				<div id="left_wrap" class="col-md-2">
+			    <div id="" class='form-group'>
+		  	    <label for="breite_create">Breite: </label>
+						<input type="number" value="9" name="breite_create" max-length="3" id="breite_create" class="form-control" required>
+						<label for="hoehe_create">Höhe: </label>
+						<input type="number" value="14" name="hoehe_create" max-length="3" id="hoehe_create" class="form-control" required>
+		      	<button id="create_matrix" class="btn btn-default">Erzeugen Matrix</button>
+		    	</div>
+		    	<div id="" class='form-group'>
+						<label for="output">Output: </label>
+						<input type="text" name="output" max-length="50" id="output" class="form-control">
+						<button id="save_output" class="btn btn-default">save output</button>
+					</div>
+		    	<div id="" class='form-group'>
+						<label for="hoehe_import">Höhe: </label>
+						<input type="number" value="14" name="hoehe_import" max-length="3" id="hoehe_import" class="form-control" required>
+						<label for="input">Import: </label>
+						<input type="text" value="{8192, 4096, 2048, 1025, 514, 260, 136, 80, 32}" name="input" id="input" class="form-control">
+		      	<button id="import_matrix" class="btn btn-default">import Matrix</button>
+		    	</div>
+		    	<div id="" class='form-group'>
+						<select name="clipboard" id="clipboard" size='10' class="form-control">
+							<!-- -->
+	    			</select>
+						<button id="removeSelected_clipboard" class="btn btn-default">Remove</button>
+						<button id="importSelected_clipboard" class="btn btn-default">Import</button>
+					</div>
+				</div> <!-- end leftwrap -->
+			
+    		<div class="col-md-10">
+					<div id="pixeln_wrap">
+					</div>
+    		</div>
+			</div> <!-- end row -->
 		</main>
 
 		<footer>
 
 		</footer>
-
-	</div>
-
+	</div> <!-- ende container -->
 </body>
 
 <script type"text/javascript">
@@ -94,8 +100,8 @@
 		$('#importSelected_clipboard').click(importSelectedClipboard);
 		
 		// Function to change color of each DIV      
-		$(document).on('click', '.led', function(){
-		//save bg-color 
+		$(document).on('click mousehold', '.led', function(){
+		//save bg-color
 		var color = $(this).css("background-color");
 		
 		//if color white, set black, else white
@@ -257,7 +263,6 @@
 			console.log('LOG HOEHE: ' + hoehe);
 			importMatrix(text, hoehe);
 		}
-		
 </script>
 
 </html>
